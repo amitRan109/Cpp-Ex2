@@ -17,15 +17,16 @@ Node* Tree:: findNode (string name, Node* temp) {
     else return NULL;  
 }
 Tree& Tree:: addFather(string son, string father) {
+
     Node* s = findNode (son, root);
-    if (s->getFather()) throw out_of_range {"father: This relation is already exist"};
+    if (s == nullptr ||s->getFather()) throw out_of_range {"father: This relation is already exist"};
     s->father = new Node(father);
     s->father->gender = 0;
     return *this;
 }
 Tree& Tree:: addMother(string son, string mother) {
     Node* s = findNode (son, root);
-    if (s->getMother()) throw out_of_range {"mother: This relation is already exist"};
+    if (s == nullptr ||s->getMother()) throw out_of_range {"mother: This relation is already exist"};
     s->mother = new Node(mother);
     s->mother->gender = 1;
     return *this;
@@ -163,7 +164,6 @@ void Tree:: removeRecurs(Node* temp) {
     delete temp;
     }
 }
-
 Node* Tree:: findSon(string name, Node* temp) {
     if (!temp) return  nullptr;
     if (temp->getFather() != nullptr && temp->getFather()->getData() == name) 
