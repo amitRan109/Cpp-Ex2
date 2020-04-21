@@ -92,22 +92,11 @@ Tree Hila ("Hila");
       CHECK(T.find("father")==string("Avi"));
       CHECK(T.find("mother")==string("Tzafit"));
       CHECK(T.find("grandfather")==string("Israel"));
-      CHECK(T.find("grandfather")==string("Ita"));
+      CHECK(T.find("grandmother")==string("Ita"));
       CHECK(T.find("great-grandfather")==string("Nathan"));
-      CHECK(T.find("great-grandMother")==string("Tzipora"));
-
-      try {
-		T.find("uncle");  // throws an exception
-	} catch (const exception& ex) {
-            CHECK(string("The tree cannot handle the 'uncle' relation")==ex.what());
-	}
-
-      try {
-		T.find("sister");  // throws an exception
-	} catch (const exception& ex) {
-            CHECK(string("The tree cannot handle the 'sister' relation")==ex.what());
-	}
-
+      CHECK(T.find("great-grandmother")==string("Tzipora"));
+      CHECK_THROWS_AS(T.find("uncle"), std::exception);
+      CHECK_THROWS_AS(T.find("sister"), std::exception);
       
 }
      
@@ -133,14 +122,10 @@ Tree Hila ("Hila");
       .addFather("Nava", "Nathan")
 	.addMother("Nava", "Tzipora");
 
-         remove("Avi");
+         T.remove("Avi");
         CHECK(T.relation("Avi")==string("unrelated"));
         CHECK(T.relation("Israel")==string("unrelated"));
         CHECK(T.relation("Ita")==string("unrelated"));
-         T.remove("Chen");
-        CHECK(T.relation("Chen")==string("unrelated"));
-        CHECK(T.relation("Tzafit")==string("unrelated"));
-        CHECK(T.relation("Nava")==string("unrelated"));
 }
 
 
@@ -149,7 +134,7 @@ Tree Hila ("Hila");
 
 
 
-TEST_CASE("Checking relation"){ //18
+TEST_CASE("Checking relation"){ //23
 Tree Amit ("Amit"); 
 	Amit.addFather("Amit", "Ofir") 
 	.addMother("Amit", "Chen")   
@@ -227,33 +212,22 @@ Tree Inbar ("Inbar");
       CHECK(Amit.find("grandfather")==string("Micha"));
       CHECK(Amit.find("grandmother")==string("Rachel"));
       CHECK(Amit.find("great-grandfather")==string("Meir"));
-      CHECK(Amit.find("great-grandMother")==string("Becka"));
+      CHECK(Amit.find("great-grandmother")==string("Becka"));
 
       CHECK(Amit.find("father")!=string("Amit"));
       CHECK(Amit.find("grandfather")!=string("Chen"));
       CHECK(Amit.find("mother")!=string("Meir"));
-      CHECK(Amit.find("great-grandMother")!=string("Ofir"));
+      CHECK(Amit.find("great-grandmother")!=string("Ofir"));
 
       CHECK(Amit.find("father")==Inbar.find("father"));
       CHECK(Amit.find("mother")==Inbar.find("mother"));
       CHECK(Amit.find("grandfather")==Inbar.find("grandfather"));
       CHECK(Amit.find("grandmother")==Inbar.find("grandmother"));
       CHECK(Amit.find("great-grandfather")==Inbar.find("great-grandfather"));
-      CHECK(Amit.find("great-grandMother")==Inbar.find("great-grandMother"));
+      CHECK(Amit.find("great-grandmother")==Inbar.find("great-grandmother"));
       CHECK(Amit.find("me")!=Inbar.find("me"));
-
-      try {
-		Amit.find("uncle");  // throws an exception
-	} catch (const exception& ex) {
-            CHECK(string("The tree cannot handle the 'uncle' relation")==ex.what());
-	}
-
-      try {
-		Amit.find("sister");  // throws an exception
-	} catch (const exception& ex) {
-            CHECK(string("The tree cannot handle the 'sister' relation")==ex.what());
-	}
-
+      CHECK_THROWS_AS(Amit.find("uncle"), std::exception);
+      CHECK_THROWS_AS(Amit.find("sister"), std::exception);
       
 }
      
@@ -301,10 +275,6 @@ Tree Inbar ("Inbar");
       CHECK(Inbar.relation("Meir")==string("unrelated"));
       CHECK(Inbar.relation("Becka")!=Amit.relation("Becka"));
       CHECK(Inbar.relation("Meir")!=Amit.relation("Meir"));
-
-      try {
-		Inbar.find("great-grandfather");  // throws an exception
-	} catch (const exception& ex) {
-            CHECK(string("relation not found")==ex.what());
-	}
+      CHECK_THROWS_AS(Inbar.find("great-grandfather"), std::exception);
+      
 }
