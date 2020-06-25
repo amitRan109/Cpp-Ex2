@@ -14,6 +14,9 @@ Node* Tree:: findNode (string name, Node* temp) {
     else if (m) return m;
     else return NULL;  
 }
+Tree::~Tree(){ 
+    delete root;
+}
 Tree& Tree:: addFather(string son, string father) {
 
     Node* s = findNode (son, root);
