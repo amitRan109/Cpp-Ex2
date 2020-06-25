@@ -38,6 +38,6 @@ namespace family {
         vector <string> split (string s);
         void removeRecurs(Node* temp);
         Node* findSon (string name, Node* temp);
-        //~Tree ();
+        ~Tree ();
     };
 }
