@@ -4,9 +4,7 @@
 using namespace std;
 using namespace family;
 //Tree
-Tree:: Tree(string root) {
-    this->root = new Node(root);
-}
+Tree:: Tree(string root) :root(new Node(root)){}
 Node* Tree:: findNode (string name, Node* temp) {
     if (!temp) return NULL;
     if (temp->getData() == name) return temp;
